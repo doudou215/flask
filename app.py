@@ -52,5 +52,14 @@ def register():
                 db.session.commit()
                 #如果注册成功，就跳转到登录页面
                 return redirect(url_for('login'))
+@app.context_processor
+def my_context_prodecessor():
+    user_id = session.get('user_id')
+    if user_id:
+        user = User.query.filter(User.id==user_id).first()
+        if user:
+            return {'user': user}
+    return {}
+
 if __name__ == '__main__':
     app.run()
